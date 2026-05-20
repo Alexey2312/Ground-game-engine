@@ -1,30 +1,16 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
+#include "core/application/application.hpp"
+#include "core/window/window.hpp"
+#include <memory>
 
 int main()
 {
-    if (!glfwInit())
-    {
-        return -1;
-    }
+    Ground::Application app;
+    auto window1 = std::make_unique<Ground::Core::Window>(Ground::Core::WindowData("Ground Engine"), true);
+    auto window2 = std::make_unique<Ground::Core::Window>(Ground::Core::WindowData("Ground Engine 2"), true);
+    app.addWindow(std::move(window1));
+    app.addWindow(std::move(window2));
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Ground Engine", NULL, NULL);
-    glfwMakeContextCurrent(window);
+    app.run();
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD \n";
-        return -1;
-    }
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
     return 0;
 }

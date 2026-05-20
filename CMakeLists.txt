@@ -29,6 +29,20 @@ FetchContent_Declare(
     GIT_TAG        3.4
 )
 
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/icaven/glm.git
+    GIT_TAG        0.9.3.2
+)
+
+FetchContent_GetProperties(glm)
+
+if(NOT glm_POPULATED)
+  FetchContent_Populate(glm)
+  add_library(glm INTERFACE)
+  target_include_directories(glm INTERFACE ${glm_SOURCE_DIR})
+endif()
+
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -47,6 +61,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Vulkan::Vulkan
     OpenGL::GL
     glfw
+    glm
     glad
     ${CMAKE_DL_LIBS}
 )
