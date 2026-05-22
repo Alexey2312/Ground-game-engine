@@ -7,16 +7,6 @@
 namespace Ground::Core::Logger
 {
 
-#ifndef NDEBUG
-    #define LOG_INFO(...)  Ground::Core::EngineLogger::Get().log(Ground::Core::EngineLogType::Info, __VA_ARGS__)
-    #define LOG_WARN(...)  Ground::Core::EngineLogger::Get().log(Ground::Core::EngineLogType::Warning, __VA_ARGS__)
-    #define LOG_ERROR(...) Ground::Core::EngineLogger::Get().log(Ground::Core::EngineLogType::Error, __VA_ARGS__)
-#else
-    #define LOG_INFO(...)
-    #define LOG_WARN(...)
-    #define LOG_ERROR(...)
-#endif
-
 enum class EngineLogType
 {
     Error = 0,

@@ -4,14 +4,13 @@
 #include "GLFW/glfw3.h"
 #include "../colors/colors.hpp"
 #include <cstddef>
-#include <iostream>
 
 void Ground::Core::Window::init()
 {
     if (!glfwInit())
     {
-         std::cerr << "CRITICAL: GLFW not initialized before creating window!" << std::endl;
-         return;
+        Logger::EngineLogger::log({Logger::EngineLogType::Error, "GLFW not initialized before creating window!", CLI::Colors::RED});
+        return;
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -22,7 +21,7 @@ void Ground::Core::Window::init()
 
     if (!native_window)
     {
-        std::cerr << "ERROR: Window creation failed! Hardware might not support OpenGL 4.5" << std::endl;
+        Logger::EngineLogger::log({Logger::EngineLogType::Error, "Window creation failed! Hardware might not support OpenGL 4.5", CLI::Colors::RED});
         return;
     }
 
@@ -33,7 +32,6 @@ void Ground::Core::Window::init()
     {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            std::cerr << "ERROR: Failed to initialize GLAD. Is the context valid? Current window: " << native_window << "\n";
             return;
         }
         glad_initialized = true;
@@ -66,7 +64,7 @@ void Ground::Core::Window::update()
             break;
 
         case Ground::Core::WindowBackend::Vulkan:
-            std::cerr << Ground::Core::CLI::Colors::RED << "Vulkan backend didn't implemented! \n" << Ground::Core::CLI::Colors::RESET;
+            Logger::EngineLogger::log({Logger::EngineLogType::Error, "Vulkan backend didn't implemented!", CLI::Colors::RED});
             break;
     }
 }
