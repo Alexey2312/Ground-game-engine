@@ -41,15 +41,12 @@ void Ground::Core::Window::init()
 
 void Ground::Core::Window::updateOpenGlWindow()
 {
-    glfwPollEvents();
     glfwMakeContextCurrent(native_window);
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
     if (!glfwWindowShouldClose(native_window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(native_window);
-        glfwPollEvents();
     }
 
     return;
@@ -64,7 +61,7 @@ void Ground::Core::Window::update()
             break;
 
         case Ground::Core::WindowBackend::Vulkan:
-            Logger::EngineLogger::log({Logger::EngineLogType::Error, "Vulkan backend didn't implemented!", CLI::Colors::RED});
+            Logger::EngineLogger::log({Logger::EngineLogType::Error, "Vulkan backend not implemented!", CLI::Colors::RED});
             break;
     }
 }

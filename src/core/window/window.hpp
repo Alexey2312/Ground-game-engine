@@ -31,12 +31,12 @@ class Window
     GLFWwindow* native_window = nullptr;
 public:
     void updateOpenGlWindow();
-    void update(); // You should call this method every frame!
+    void update(); /// You should call this method every frame!
     void init();
 
     void close();
 
-    bool shouldClose() {return glfwWindowShouldClose(native_window);}
+    bool shouldClose() {return native_window && glfwWindowShouldClose(native_window);}
 
     int32_t width() const {return data.width;}
     void setWidth(int32_t new_width) {data.width = new_width;}
@@ -55,7 +55,26 @@ public:
     Window& operator=(const Window&) = delete;
 
     Window(Window&& other) noexcept : native_window(other.native_window), data(std::move(other.data)), is_available_for_rendering(other.is_available_for_rendering) {other.native_window = nullptr;}
-    Window& operator=(Window&& other) noexcept = default;
+    Window& operator=(Window&& other) noexcept
+    {
+        if (this != &other)
+        {
+            if (native_window)
+            {
+                glfwDestroyWindow(native_window);
+            }
+
+            native_window = other.native_window;
+
+            data = std::move(other.data);
+            is_available_for_rendering = other.is_available_for_rendering;
+
+            other.native_window = nullptr;
+
+            init();
+        }
+        return *this;
+    }
 
     ~Window()
     {

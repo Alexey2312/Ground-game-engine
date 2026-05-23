@@ -1,9 +1,12 @@
 #include <glad/glad.h>
 #include "application.hpp"
+#include "GLFW/glfw3.h"
 
 void Ground::Application::run()
 {
     is_running = true;
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
     while (is_running && !windows.empty())
     {
@@ -26,7 +29,9 @@ void Ground::Application::run()
         if (windows.empty())
         {
             is_running = false;
+            glfwTerminate();
             return;
         }
     }
+    glfwTerminate();
 }
