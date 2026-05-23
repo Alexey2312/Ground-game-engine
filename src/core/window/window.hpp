@@ -70,8 +70,6 @@ public:
             is_available_for_rendering = other.is_available_for_rendering;
 
             other.native_window = nullptr;
-
-            init();
         }
         return *this;
     }

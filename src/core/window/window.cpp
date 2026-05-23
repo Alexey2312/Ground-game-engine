@@ -32,6 +32,7 @@ void Ground::Core::Window::init()
     {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
+            Logger::EngineLogger::EngineLogger::log({Logger::EngineLogType::Error, "Failed to initialize GLAD!", CLI::Colors::RED});
             return;
         }
         glad_initialized = true;
